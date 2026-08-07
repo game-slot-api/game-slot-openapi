@@ -16,6 +16,7 @@ type DecodeSSOKeyReply struct {
 	GameBrand string `json:"gameBrand,omitempty"`
 	GameId    string `json:"gameId,omitempty"`
 	Expire    int64  `json:"expire,omitempty"`
+	Currency  string `json:"currency,omitempty"`
 }
 
 type GetGameBetConfigRequest struct {
