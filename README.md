@@ -23,7 +23,8 @@ client := openapi.New(openapi.Config{
 
 ## 接口
 
-- `DecodeToken`
+- `DecodeToken`（返回含 `currencySymbol`）
+- `GetBalance`
 - `GetGameBetConfig`
 - `GetPlayerRtp`
 - `SelectSpin`（`DecodeSpinData` 解码 base64）

@@ -49,6 +49,14 @@ func (c *Client) DecodeToken(ctx context.Context, req *DecodeSSOKeyRequest) (*De
 	return &out, nil
 }
 
+func (c *Client) GetBalance(ctx context.Context, req *GetBalanceRequest) (*GetBalanceReply, error) {
+	var out GetBalanceReply
+	if err := c.post(ctx, "/openapi/player/balance", req, &out); err != nil {
+		return nil, err
+	}
+	return &out, nil
+}
+
 func (c *Client) GetGameBetConfig(ctx context.Context, req *GetGameBetConfigRequest) (*GetGameBetConfigReply, error) {
 	var out GetGameBetConfigReply
 	if err := c.post(ctx, "/openapi/history/get-game-bet-config", req, &out); err != nil {
