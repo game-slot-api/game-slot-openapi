@@ -11,12 +11,13 @@ type DecodeSSOKeyRequest struct {
 }
 
 type DecodeSSOKeyReply struct {
-	AppId     string `json:"appId,omitempty"`
-	PlayerId  string `json:"playerId,omitempty"`
-	GameBrand string `json:"gameBrand,omitempty"`
-	GameId    string `json:"gameId,omitempty"`
-	Expire    int64  `json:"expire,omitempty"`
-	Currency  string `json:"currency,omitempty"`
+	AppId     string  `json:"appId,omitempty"`
+	PlayerId  string  `json:"playerId,omitempty"`
+	GameBrand string  `json:"gameBrand,omitempty"`
+	GameId    string  `json:"gameId,omitempty"`
+	Expire    int64   `json:"expire,omitempty"`
+	Currency  string  `json:"currency,omitempty"`
+	Balance   float64 `json:"balance,omitempty"`
 }
 
 type GetGameBetConfigRequest struct {
