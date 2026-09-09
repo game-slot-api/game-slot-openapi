@@ -26,6 +26,7 @@ client := openapi.New(openapi.Config{
 - `DecodeToken`（返回含 `currencySymbol`）
 - `GetBalance`
 - `GetGameBetConfig`
+- `GetGameHistory`（玩家游戏历史，时间范围分页）
 - `GetPlayerRtp`
-- `SelectSpin`（`DecodeSpinData` 解码 base64）
+- `SelectSpin`（支持 `originBet` 基础 bet；`DecodeSpinData` 解码 base64）
 - `Bet` / `Win` / `Refund`

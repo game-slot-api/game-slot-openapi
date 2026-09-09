@@ -51,6 +51,52 @@ type GameBetConfig struct {
 	BetOptions  []float64 `json:"betOptions,omitempty"`
 }
 
+// GetGameHistoryRequest 查询玩家游戏历史记录（平台透传 history GameHistoryList）。
+type GetGameHistoryRequest struct {
+	AppId        string `json:"appId"`
+	GameBrand    string `json:"gameBrand"`
+	GameId       string `json:"gameId"`
+	PlayerId     string `json:"playerId"`
+	Status       string `json:"status,omitempty"`       // 记录状态，空为全部
+	StartTime    int64  `json:"startTime"`              // 开始时间戳（毫秒）
+	EndTime      int64  `json:"endTime"`                // 结束时间戳（毫秒）
+	PageIndex    int32  `json:"pageIndex,omitempty"`    // 分页索引
+	PageSize     int32  `json:"pageSize,omitempty"`     // 每页数量
+	NeedTotalNum bool   `json:"needTotalNum,omitempty"` // 是否返回总条数
+	IsAsc        bool   `json:"isAsc,omitempty"`        // 是否升序（默认倒序）
+	NoGameData   bool   `json:"noGameData,omitempty"`   // true 时不返回游戏数据
+}
+
+type GetGameHistoryReply struct {
+	List      []*GetGameHistoryInfo `json:"list,omitempty"`
+	PageIndex int32                 `json:"pageIndex,omitempty"`
+	PageSize  int32                 `json:"pageSize,omitempty"`
+	TotalNum  int64                 `json:"totalNum,omitempty"`
+}
+
+type GetGameHistoryInfo struct {
+	Bet              float64 `json:"bet"`
+	Win              float64 `json:"win"`
+	RoundId          string  `json:"roundId"`
+	OrderNo          string  `json:"orderNo"`
+	PlayerId         string  `json:"playerId"`
+	AppId            string  `json:"appId"`
+	GameBrand        string  `json:"gameBrand"`
+	GameId           string  `json:"gameId"`
+	Sample           string  `json:"sample,omitempty"`
+	Note             string  `json:"note,omitempty"`
+	Rtp              string  `json:"rtp,omitempty"`
+	Status           string  `json:"status,omitempty"`
+	WinBalance       float64 `json:"winBalance,omitempty"`
+	AfterBetBalance  float64 `json:"afterBetBalance,omitempty"`
+	BeforeBetBalance float64 `json:"beforeBetBalance,omitempty"`
+	CreateTime       int64   `json:"createTime,omitempty"` // 毫秒
+	BetTime          int64   `json:"betTime,omitempty"`    // 毫秒
+	WinTime          int64   `json:"winTime,omitempty"`    // 毫秒
+	GameData         []byte  `json:"gameData,omitempty"`
+	Compress         int32   `json:"compress,omitempty"`
+}
+
 type GetPlayerRtpRequest struct {
 	AppId     string `json:"appId"`
 	PlayerId  string `json:"playerId"`
@@ -67,11 +113,14 @@ type SelectSpinRequest struct {
 	PlayerId      string  `json:"playerId"`
 	GameBrand     string  `json:"gameBrand"`
 	GameId        string  `json:"gameId"`
-	Bet           float64 `json:"bet"`
+	Bet           float64 `json:"bet"`                  // 实际下注额（可含倍率）
 	RoundModel    string  `json:"roundModel,omitempty"` // DEFAULT / EXTRA / BUY
 	Currency      string  `json:"currency,omitempty"`
 	Mock          string  `json:"mock,omitempty"`
 	RoundExtModel string  `json:"roundExtModel,omitempty"`
+	// OriginBet 基础 bet（未乘倍率的样本基准下注）。
+	// 有倍率/买免费等场景时：Bet 为玩家实际扣款额，OriginBet 为选局用的基础 bet；不传则由 rtp 侧按 Bet 处理。
+	OriginBet float64 `json:"originBet,omitempty"`
 }
 
 type SelectSpinReply struct {

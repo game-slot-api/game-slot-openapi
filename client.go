@@ -65,6 +65,14 @@ func (c *Client) GetGameBetConfig(ctx context.Context, req *GetGameBetConfigRequ
 	return &out, nil
 }
 
+func (c *Client) GetGameHistory(ctx context.Context, req *GetGameHistoryRequest) (*GetGameHistoryReply, error) {
+	var out GetGameHistoryReply
+	if err := c.post(ctx, "/openapi/history/get-game-history", req, &out); err != nil {
+		return nil, err
+	}
+	return &out, nil
+}
+
 func (c *Client) GetPlayerRtp(ctx context.Context, req *GetPlayerRtpRequest) (*GetPlayerRtpReply, error) {
 	var out GetPlayerRtpReply
 	if err := c.post(ctx, "/openapi/rtp/get-player-rtp", req, &out); err != nil {

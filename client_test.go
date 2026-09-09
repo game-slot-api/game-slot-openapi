@@ -54,6 +54,20 @@ func TestClientDecodeTokenAndBet(t *testing.T) {
 			"msg":  "internal server error",
 		})
 	})
+	mux.HandleFunc("/openapi/history/get-game-history", func(w http.ResponseWriter, r *http.Request) {
+		_ = json.NewEncoder(w).Encode(map[string]any{
+			"code": 0,
+			"msg":  "success",
+			"data": map[string]any{
+				"list": []map[string]any{
+					{"roundId": "r1", "bet": 1.0, "win": 2.0, "orderNo": "o1"},
+				},
+				"pageIndex": 0,
+				"pageSize":  10,
+				"totalNum":  1,
+			},
+		})
+	})
 
 	srv := httptest.NewServer(mux)
 	defer srv.Close()
@@ -86,9 +100,20 @@ func TestClientDecodeTokenAndBet(t *testing.T) {
 		t.Fatalf("unexpected balance: %v", bet.Balance)
 	}
 
-	_, err = cli.SelectSpin(t.Context(), &SelectSpinRequest{AppId: "app1", PlayerId: "p1", GameBrand: "brand", GameId: "g1", Bet: 1})
+	_, err = cli.SelectSpin(t.Context(), &SelectSpinRequest{AppId: "app1", PlayerId: "p1", GameBrand: "brand", GameId: "g1", Bet: 1, OriginBet: 0.2})
 	apiErr, ok := AsAPIError(err)
 	if !ok || apiErr.Code != 1001 {
 		t.Fatalf("expected APIError 1001, got %v", err)
+	}
+
+	his, err := cli.GetGameHistory(t.Context(), &GetGameHistoryRequest{
+		AppId: "app1", GameBrand: "brand", GameId: "g1", PlayerId: "p1",
+		StartTime: 1, EndTime: 2, PageSize: 10, NeedTotalNum: true,
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if his.TotalNum != 1 || len(his.List) != 1 || his.List[0].RoundId != "r1" {
+		t.Fatalf("unexpected history reply: %+v", his)
 	}
 }
