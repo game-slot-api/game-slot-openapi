@@ -136,6 +136,7 @@ type SelectSpinReply struct {
 	Rtp            string  `json:"rtp,omitempty"`
 	Rate           float64 `json:"rate,omitempty"`
 	Compress       int32   `json:"compress,omitempty"`
+	ControlTag     string  `json:"controlTag,omitempty"` // 控制标记，结算 win 时回传
 }
 
 // DecodeSpinData 将 SelectSpin 返回的 base64 Data 解码为原始字节。
@@ -185,6 +186,8 @@ type WinRequest struct {
 	Win              float64 `json:"win"`
 	BetTransactionId string  `json:"betTransactionId"`
 	GameData         []byte  `json:"gameData,omitempty"`
+	// ControlTag 控制标记，来自 SelectSpin 返回，结算时回传。
+	ControlTag string `json:"controlTag,omitempty"`
 }
 
 type WinReply struct {
