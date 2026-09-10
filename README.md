@@ -29,4 +29,4 @@ client := openapi.New(openapi.Config{
 - `GetGameHistory`（玩家游戏历史，时间范围分页）
 - `GetPlayerRtp`
 - `SelectSpin`（支持 `originBet` / 返回 `controlTag`；`DecodeSpinData` 解码 base64）
-- `Bet` / `Win`（`Win` 可回传 `controlTag`） / `Refund`
+- `Bet` / `Win`（`Win` 可回传 `controlTag`、`isFinished`） / `Refund`

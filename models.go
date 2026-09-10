@@ -162,7 +162,7 @@ type BetRequest struct {
 	GameId           string  `json:"gameId"`
 	Rtp              string  `json:"rtp,omitempty"`
 	RoundModel       string  `json:"roundModel,omitempty"`
-	GameData         []byte  `json:"gameData,omitempty"`
+	GameData         []byte  `json:"gameData,omitempty"` // 约定 JSON object
 	TraceId          string  `json:"traceId,omitempty"`
 	TransactionId    string  `json:"transactionId,omitempty"`
 	IsFree           bool    `json:"isFree,omitempty"`
@@ -185,9 +185,12 @@ type WinRequest struct {
 	GameId           string  `json:"gameId"`
 	Win              float64 `json:"win"`
 	BetTransactionId string  `json:"betTransactionId"`
-	GameData         []byte  `json:"gameData,omitempty"`
+	// GameData 游戏数据，约定按 JSON object 传入；平台会合并 isFinished、betTransactionId。
+	GameData []byte `json:"gameData,omitempty"`
 	// ControlTag 控制标记，来自 SelectSpin 返回，结算时回传。
 	ControlTag string `json:"controlTag,omitempty"`
+	// IsFinished 本局是否结束；平台会写入 Transaction.GameData.isFinished。
+	IsFinished bool `json:"isFinished"`
 }
 
 type WinReply struct {
