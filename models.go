@@ -121,6 +121,7 @@ type SelectSpinRequest struct {
 	// OriginBet 基础 bet（未乘倍率的样本基准下注）。
 	// 有倍率/买免费等场景时：Bet 为玩家实际扣款额，OriginBet 为选局用的基础 bet；不传则由 rtp 侧按 Bet 处理。
 	OriginBet float64 `json:"originBet,omitempty"`
+	RoundId   string  `json:"roundId,omitempty"` // 牌局号
 }
 
 type SelectSpinReply struct {
